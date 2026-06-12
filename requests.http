@@ -1,0 +1,32 @@
+### Create a visit
+POST http://localhost:8080/api/visits
+Content-Type: application/json
+
+{
+  "clientId": "c-1001",
+  "customerName": "Acme Clinic",
+  "notes": "Intro meeting; follow up in 2 weeks",
+  "visitedAt": "2026-06-12T15:00:00Z"
+}
+
+### List visits (paged)
+GET http://localhost:8080/api/visits?page=0&size=20&sort=visitedAt,desc
+
+### Get one visit (paste an id from the create/list response)
+GET http://localhost:8080/api/visits/REPLACE_WITH_ID
+
+### Update a visit
+PUT http://localhost:8080/api/visits/REPLACE_WITH_ID
+Content-Type: application/json
+
+{
+  "customerName": "Acme Clinic (HQ)",
+  "notes": "Updated after call",
+  "visitedAt": "2026-06-12T15:00:00Z"
+}
+
+### Delete a visit
+DELETE http://localhost:8080/api/visits/REPLACE_WITH_ID
+
+### Health
+GET http://localhost:8080/actuator/health
