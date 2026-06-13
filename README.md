@@ -1,5 +1,7 @@
 # FieldSync
 
+![CI](https://github.com/smarquez-jpg/FieldSync/actions/workflows/ci.yml/badge.svg)
+
 A multi-tenant REST API and (eventually) offline-sync engine for a mobile
 field-data app — built in Kotlin and Spring Boot. Field users log visits and
 records on their phones, often offline, then sync when they reconnect.
@@ -123,7 +125,7 @@ src/test/kotlin/...              # Testcontainers integration test
 
 - [x] **M1 — Runnable skeleton.** Visit CRUD, Postgres, Flyway, validation,
       error handling, Swagger, one Testcontainers test.
-- [ ] **M2 — Auth + multi-tenancy + RBAC.** JWT login, `org_id` from the token,
+- [x] **M2 — Auth + multi-tenancy + RBAC.** JWT login, `org_id` from the token,
       query-level tenant scoping, `REP` / `MANAGER` roles, an `orgs` + `users`
       schema (V2 migration).
 - [ ] **M3 — Sync engine.** `POST /api/sync` batch endpoint: client-generated
