@@ -8,4 +8,5 @@ import java.util.UUID
 interface VisitRepository : JpaRepository<Visit, UUID> {
     fun findByOrgId(orgId: UUID, pageable: Pageable): Page<Visit>
     fun findByIdAndOrgId(id: UUID, orgId: UUID): Visit?
+    fun findByOrgIdAndClientId(orgId: UUID, clientId: String): Visit?
 }
