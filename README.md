@@ -128,7 +128,7 @@ src/test/kotlin/...              # Testcontainers integration test
 - [x] **M2 — Auth + multi-tenancy + RBAC.** JWT login, `org_id` from the token,
       query-level tenant scoping, `REP` / `MANAGER` roles, an `orgs` + `users`
       schema (V2 migration).
-- [ ] **M3 — Sync engine.** `POST /api/sync` batch endpoint: client-generated
+- [x] **M3 — Sync engine.** `POST /api/sync` batch endpoint: client-generated
       ids, idempotent upserts on `(org_id, client_id)`, version-based conflict
       detection, per-item results (`applied` / `conflict` / `rejected`).
 - [ ] **M4 — Audit log + more tests.** Append-only change log; broaden coverage.
