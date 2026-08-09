@@ -1,11 +1,13 @@
 package com.fieldsync.visit
 
+import com.fieldsync.audit.AuditAction
+import com.fieldsync.audit.AuditService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 @Service
-class SyncService(private val repo: VisitRepository) {
+class SyncService(private val repo: VisitRepository, private val audit: AuditService) {
 
     @Transactional
     fun sync(orgId: UUID, request: SyncRequest): SyncResponse =
@@ -31,6 +33,7 @@ class SyncService(private val repo: VisitRepository) {
                         visitedAt = item.visitedAt,
                     )
                 )
+                audit.record(action = AuditAction.CREATE, entityType = "Visit", entityId = created.id)
                 SyncResult(item.clientId, SyncStatus.APPLIED, id = created.id, version = created.version)
             }
 
@@ -44,6 +47,7 @@ class SyncService(private val repo: VisitRepository) {
                 existing.notes = item.notes
                 existing.visitedAt = item.visitedAt
                 val saved = repo.saveAndFlush(existing)
+                audit.record(action = AuditAction.UPDATE, entityType = "Visit", entityId = saved.id)
                 SyncResult(item.clientId, SyncStatus.APPLIED, id = saved.id, version = saved.version)
             }
 

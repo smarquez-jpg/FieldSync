@@ -1,5 +1,7 @@
 package com.fieldsync.visit
 
+import com.fieldsync.audit.AuditAction
+import com.fieldsync.audit.AuditService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -8,7 +10,7 @@ import java.util.UUID
 
 @Service
 @Transactional
-class VisitService(private val repo: VisitRepository) {
+class VisitService(private val repo: VisitRepository, private val audit: AuditService) {
 
     @Transactional(readOnly = true)
     fun list(orgId: UUID, pageable: Pageable): Page<Visit> =
@@ -19,14 +21,17 @@ class VisitService(private val repo: VisitRepository) {
         repo.findByIdAndOrgId(id, orgId) ?: throw VisitNotFoundException(id)
 
     fun create(orgId: UUID, req: CreateVisitRequest): Visit {
-        val visit = Visit(
-            clientId = req.clientId,
-            orgId = orgId,
-            customerName = req.customerName,
-            notes = req.notes,
-            visitedAt = req.visitedAt,
+        val saved = repo.save(
+            Visit(
+                clientId = req.clientId,
+                orgId = orgId,
+                customerName = req.customerName,
+                notes = req.notes,
+                visitedAt = req.visitedAt,
+            )
         )
-        return repo.save(visit)
+        audit.record(action = AuditAction.CREATE, entityType = "Visit", entityId = saved.id)
+        return saved
     }
 
     fun update(orgId: UUID, id: UUID, req: UpdateVisitRequest): Visit {
@@ -34,10 +39,14 @@ class VisitService(private val repo: VisitRepository) {
         visit.customerName = req.customerName
         visit.notes = req.notes
         visit.visitedAt = req.visitedAt
-        return repo.save(visit)
+        val saved = repo.save(visit)
+        audit.record(action = AuditAction.UPDATE, entityType = "Visit", entityId = saved.id)
+        return saved
     }
 
     fun delete(orgId: UUID, id: UUID) {
+        val visit = get(orgId, id)
         repo.delete(get(orgId, id))
+        audit.record(action = AuditAction.DELETE, entityType = "Visit", entityId = visit.id)
     }
 }

@@ -131,7 +131,7 @@ src/test/kotlin/...              # Testcontainers integration test
 - [x] **M3 — Sync engine.** `POST /api/sync` batch endpoint: client-generated
       ids, idempotent upserts on `(org_id, client_id)`, version-based conflict
       detection, per-item results (`applied` / `conflict` / `rejected`).
-- [ ] **M4 — Audit log + more tests.** Append-only change log; broaden coverage.
+- [x] **M4 — Audit log + more tests.** Append-only change log; broaden coverage.
 - [ ] **M5 — Ship it.** Dockerized deploy to Fly.io/Render, GitHub Actions CI
       (test on PR, deploy on merge), Actuator metrics.
 
