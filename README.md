@@ -132,7 +132,7 @@ src/test/kotlin/...              # Testcontainers integration test
       ids, idempotent upserts on `(org_id, client_id)`, version-based conflict
       detection, per-item results (`applied` / `conflict` / `rejected`).
 - [x] **M4 — Audit log + more tests.** Append-only change log; broaden coverage.
-- [ ] **M5 — Ship it.** Dockerized deploy to Fly.io/Render, GitHub Actions CI
+- [x] **M5 — Ship it.** Dockerized deploy to Fly.io/Render, GitHub Actions CI
       (test on PR, deploy on merge), Actuator metrics.
 
 ## Next step (M2 starting point)
